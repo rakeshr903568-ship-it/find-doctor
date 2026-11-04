@@ -1,0 +1,80 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero">
+    <h1>Find the Right Doctor Near You</h1>
+    <p>Search nearby doctors and hospitals easily.</p>
+
+    <form action="{{ url_for('home') }}" method="GET">
+        <input type="text" name="q"
+               placeholder="Doctor name, specialization or hospital..."
+               value="{{ query }}" required>
+
+        <button type="submit">Search Doctor</button>
+    </form>
+
+    <a class="emergency" href="tel:112">
+        Emergency Help - Call 112
+    </a>
+</section>
+
+<h2>Available Doctors</h2>
+
+<div class="doctor-grid">
+
+    {% for doctor in doctors %}
+
+    <div class="doctor-card">
+
+        <h3>Dr. {{ doctor.name }}</h3>
+
+        <p><strong>Specialization:</strong>
+            {{ doctor.specialization }}</p>
+
+        <p><strong>Qualification:</strong>
+            {{ doctor.qualification or "Not provided" }}</p>
+
+        <p><strong>Hospital:</strong>
+            {{ doctor.hospital_name }}</p>
+
+        <p><strong>Location:</strong>
+            {{ doctor.city }}, {{ doctor.address }}</p>
+
+        <p><strong>Consultation:</strong>
+            {{ doctor.timings }}</p>
+
+        <p>
+            <strong>Availability:</strong>
+            {% if doctor.available %}
+                <span class="available">Available (as reported)</span>
+            {% else %}
+                <span class="unavailable">Unavailable</span>
+            {% endif %}
+        </p>
+
+        <p><strong>Hospital Phone:</strong>
+            {{ doctor.phone }}</p>
+
+        <a class="call-button"
+           href="tel:{{ doctor.phone }}">
+            Call Hospital
+        </a>
+
+    </div>
+
+    {% else %}
+
+    <p>No doctors found. Try another search.</p>
+
+    {% endfor %}
+
+</div>
+
+<p class="note">
+    Please call the hospital to confirm current doctor availability.
+    Online listings are not emergency treatment guarantees.
+</p>
+
+{% endblock %}

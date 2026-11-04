@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Doctor</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <a class="logo" href="{{ url_for('home') }}">
+        ✚ Find Doctor
+    </a>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('register') }}">Hospital Register</a>
+        <a href="{{ url_for('login') }}">Hospital Login</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="message {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+</main>
+
+<footer>
+    <p>Find Doctor | Healthcare Near You</p>
+    <p>English | ಕನ್ನಡ</p>
+    <p>For emergencies in India, call 112.</p>
+</footer>
+
+</body>
+</html>

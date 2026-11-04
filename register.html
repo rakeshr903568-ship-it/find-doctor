@@ -1,0 +1,46 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-card">
+
+    <h2>Hospital Registration</h2>
+    <p>Register your hospital with Find Doctor.</p>
+
+    <form method="POST">
+
+        <input type="hidden" name="csrf_token"
+               value="{{ csrf_token() }}">
+
+        <label>Hospital Name</label>
+        <input type="text" name="name" required>
+
+        <label>Email Address</label>
+        <input type="email" name="email" required>
+
+        <label>Password</label>
+        <input type="password" name="password"
+               minlength="8" required>
+
+        <label>Hospital Phone Number</label>
+        <input type="tel" name="phone" required>
+
+        <label>Hospital Address</label>
+        <textarea name="address" required></textarea>
+
+        <label>City</label>
+        <input type="text" name="city"
+               value="Robertsonpet / KGF" required>
+
+        <button type="submit">Register Hospital</button>
+
+    </form>
+
+    <p>Already registered?
+        <a href="{{ url_for('login') }}">Login here</a>
+    </p>
+
+</div>
+
+{% endblock %}

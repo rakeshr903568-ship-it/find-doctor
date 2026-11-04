@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-card">
+
+    <h2>Hospital Login</h2>
+
+    <form method="POST">
+
+        <input type="hidden" name="csrf_token"
+               value="{{ csrf_token() }}">
+
+        <label>Email Address</label>
+        <input type="email" name="email" required>
+
+        <label>Password</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Login</button>
+
+    </form>
+
+    <p>New hospital?
+        <a href="{{ url_for('register') }}">Register here</a>
+    </p>
+
+</div>
+
+{% endblock %}

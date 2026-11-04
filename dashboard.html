@@ -1,0 +1,96 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Hospital Dashboard</h1>
+
+<h2>Welcome, {{ hospital.name }}</h2>
+
+<p>Hospital Verification:
+    {% if hospital.verified %}
+        <span class="available">Verified</span>
+    {% else %}
+        <span class="unavailable">Pending verification</span>
+    {% endif %}
+</p>
+
+<h2>Add Doctor</h2>
+
+<div class="form-card">
+
+    <form action="{{ url_for('add_doctor') }}"
+          method="POST">
+
+        <input type="hidden" name="csrf_token"
+               value="{{ csrf_token() }}">
+
+        <label>Doctor Name</label>
+        <input type="text" name="name" required>
+
+        <label>Specialization</label>
+        <input type="text" name="specialization"
+               placeholder="Cardiologist, Dentist..." required>
+
+        <label>Qualification</label>
+        <input type="text" name="qualification">
+
+        <label>Consultation Timings</label>
+        <input type="text" name="timings"
+               placeholder="Monday to Saturday, 10 AM - 5 PM"
+               required>
+
+        <button type="submit">Add Doctor</button>
+
+    </form>
+
+</div>
+
+<h2>Manage Doctors</h2>
+
+{% for doctor in doctors %}
+
+<div class="doctor-card">
+
+    <h3>Dr. {{ doctor.name }}</h3>
+
+    <p>{{ doctor.specialization }}</p>
+    <p>{{ doctor.timings }}</p>
+
+    <p>
+        Status:
+        {% if doctor.available %}
+            Available (as reported)
+        {% else %}
+            Unavailable
+        {% endif %}
+    </p>
+
+    <form method="POST"
+          action="{{ url_for('toggle_doctor',
+                             doctor_id=doctor.id) }}">
+
+        <input type="hidden" name="csrf_token"
+               value="{{ csrf_token() }}">
+
+        <button type="submit">
+            Change Availability
+        </button>
+
+    </form>
+
+</div>
+
+{% else %}
+
+<p>No doctors added yet.</p>
+
+{% endfor %}
+
+<form action="{{ url_for('logout') }}" method="POST">
+    <input type="hidden" name="csrf_token"
+           value="{{ csrf_token() }}">
+    <button type="submit" class="logout">Logout</button>
+</form>
+
+{% endblock %}
